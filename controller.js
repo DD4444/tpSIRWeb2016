@@ -12,6 +12,8 @@ function Pencil(ctx, drawing, canvas) {
 	new DnD(canvas, this);
 
 	// Implémentez ici les 3 fonctions onInteractionStart, onInteractionUpdate et onInteractionEnd
-};
 
-
+	this.onInteractionStart = function(){
+		var form = (this.currentShape === 0) ? new Rectangle(Dnd.xbegin, Dnd.yBegin, Dnd.xend - Dnd.xBegin, Dnd.yend - Dnd.ybegin, this.currLineWidth, this.currColour) : new Line(Dnd.xbegin, Dnd.yBegin, Dnd.xend, Dnd.yend, this.currLineWidth, this.currColour);
+	}.bind(this);
+}
