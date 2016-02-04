@@ -12,9 +12,7 @@ function Pencil(ctx, drawing, canvas) {
 	// Liez ici les widgets à la classe pour modifier les attributs présents ci-dessus.
 
 	this.getCurrentShape = function(doc){
-		console.log(doc.id);
 		this.currentShape = editingMode[doc.id];
-		console.log(this.currentShape);
 	}.bind(this);
 
 	this.getCurrentColor = function(doc){
@@ -22,7 +20,6 @@ function Pencil(ctx, drawing, canvas) {
 	};
 
 	this.getCurrentLineWidth = function(doc){
-		console.log(doc.value);
 		this.currLineWidth = doc.value;
 	};
 
@@ -37,22 +34,33 @@ function Pencil(ctx, drawing, canvas) {
 	}.bind(this);
 
 	this.onInteractionUpdate = function(){
-		// if (this.currentShape === editingMode.rect){
-		// 	// ctx.clearRect(this.DnD.xbegin - this.currLineWidth, this.DnD.ybegin - this.currLineWidth, this.DnD.xend - this.DnD.xbegin + this.currLineWidth, this.DnD.yend - this.DnD.ybegin + this.currLineWidth);
-		// 	this.form.setFinalX(this.DnD.xend - this.DnD.xbegin);
-		// 	this.form.setFinalY(this.DnD.yend - this.DnD.ybegin);
-		// }
 		this.form = (this.currentShape === editingMode.butRect) ?
 		new Rectangle(this.DnD.xbegin, this.DnD.ybegin, this.DnD.xend - this.DnD.xbegin, this.DnD.yend - this.DnD.ybegin, this.currLineWidth, this.currColour) :
 		new Line(this.DnD.xbegin, this.DnD.ybegin, this.DnD.xend, this.DnD.yend, this.currLineWidth, this.currColour);
-		// ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		drawing.paint(ctx);
 		this.form.paint(ctx);
 	}.bind(this);
 
 	this.onInteractionEnd = function(){
-		// ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		drawing.addForm(this.form);
 		drawing.paint(ctx);
+		this.editList();
+	}.bind(this);
+
+	this.removeForm = function(doc){
+		console.log(doc);
+	}.bind(this);
+
+	this.editList = function(){
+		var forms = drawing.getForms();
+		$('#shapeList tbody').html("");
+		for (var i in forms) {
+			var attr = forms[i].getAttributs();
+			$('#shapeList').append("<tr><td>" + i + "</td><td>"+ attr.type + "</td><td>" + attr.thickness + "</td><td>" + attr.color + "</td><td>" + attr.xbegin +
+			"</td><td>" + attr.ybegin + "</td><td>" + attr.xend + "</td><td>" + attr.yend + "</td><td><button id=\"" + i + "\" type=\"button\" class=\"btn btn-xs btn-danger delete-form\">" +
+			"<span class=\"glyphicon glyphicon-remove\"></span></button></td></tr>");
+		}
 	}.bind(this);
 }

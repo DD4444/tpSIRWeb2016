@@ -1,4 +1,7 @@
 
+.container {
+    margin : 20px;
+}
 .myCanvas {
 
 }
@@ -31,7 +34,7 @@
 
 form {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    margin: 80px;
+    margin: 20px;
 }
 
 .mx-button label {
@@ -90,20 +93,47 @@ form {
     box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.15), 0 1px 2px  rgba(0, 0, 0, 0.05);
 }
 .mx-button:first-child label {
-  -webkit-border-top-left-radius: 4px;
-  -moz-border-radius-topleft: 4px;
-  border-top-left-radius: 4px;
-  -webkit-border-bottom-left-radius: 4px;
-  -moz-border-radius-bottomleft: 4px;
-  border-bottom-left-radius: 4px;
-  margin-left: 0;
+    -webkit-border-top-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-bottom-left-radius: 4px;
+    margin-left: 0;
 }
 .mx-button:last-child label {
-  -webkit-border-top-right-radius: 4px;
-  -moz-border-radius-topright: 4px;
-  border-top-right-radius: 4px;
-  -webkit-border-bottom-right-radius: 4px;
-  -moz-border-radius-bottomright: 4px;
-  border-bottom-right-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-bottom-right-radius: 4px;
 }
 
+table.list-unstyled {
+    display: table;
+    width: 100%;
+    margin-left: 40px;
+}
+table.list-unstyled thead, table.list-unstyled tbody {
+    float: left;
+    width: 100%;
+}
+table.list-unstyled tbody {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 572px;
+}
+table.list-unstyled tr {
+    display: table;
+    text-align: left;
+    width: 750px;
+    margin-right: 17px;
+}
+table.list-unstyled th, table.list-unstyled td {
+    border : 1px solid gray;
+    text-align: center;
+    min-width : 80px;
+    height: 25px
+    /*width: 33%;*/
+}

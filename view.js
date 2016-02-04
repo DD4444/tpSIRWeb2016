@@ -6,6 +6,7 @@
 // };
 
 Rectangle.prototype.paint = function(ctx) {
+    ctx.beginPath();
     ctx.rect(this.getInitX(), this.getInitY(), this.getFinalX(), this.getFinalY());
     // ctx.fillStyle = this.getColor();
     ctx.strokeStyle = this.getColor();
@@ -25,8 +26,7 @@ Line.prototype.paint = function(ctx) {
 
 
 Drawing.prototype.paint = function(ctx) {
-    // console.log(this.getForms());
-    ctx.fillStyle = '#F0F0F0'; // set canvas' background color
+    ctx.fillStyle = 'rgba(140,140,140,0.2)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     this.getForms().forEach(function(eltDuTableau) {
         eltDuTableau.paint(ctx);
