@@ -7,9 +7,10 @@
 
 Rectangle.prototype.paint = function(ctx) {
     ctx.rect(this.getInitX(), this.getInitY(), this.getFinalX(), this.getFinalY());
-    ctx.fillStyle = this.getColor();
+    // ctx.fillStyle = this.getColor();
+    ctx.strokeStyle = this.getColor();
     ctx.lineWidth = this.getThick();
-    ctx.fillRect(this.getInitX(), this.getInitY(), this.getFinalX(), this.getFinalY());
+    ctx.fillRect(this.getInitX(), this.getInitY(), this.getFinalX(), this.getFinalY(), 0);
     ctx.stroke();
 };
 
@@ -24,7 +25,7 @@ Line.prototype.paint = function(ctx) {
 
 
 Drawing.prototype.paint = function(ctx) {
-    console.log(this.getForms());
+    // console.log(this.getForms());
     ctx.fillStyle = '#F0F0F0'; // set canvas' background color
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     this.getForms().forEach(function(eltDuTableau) {

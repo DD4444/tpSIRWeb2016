@@ -15,7 +15,6 @@ function DnD(canvas, interactor) {
         var initialPosition = getMousePosition(canvas, evt);
         this.xbegin = initialPosition.x;
         this.ybegin = initialPosition.y;
-        this.toString();
         interactor.onInteractionStart();
     }.bind(this);
 
@@ -24,7 +23,6 @@ function DnD(canvas, interactor) {
             var finalPosition = getMousePosition(canvas, evt);
             this.xend = finalPosition.x;
             this.yend = finalPosition.y;
-            this.toString();
             interactor.onInteractionUpdate();
         }
     }.bind(this);
@@ -32,7 +30,6 @@ function DnD(canvas, interactor) {
     this.onUp = function(evt){
         this.isPress = false;
         interactor.onInteractionEnd();
-        this.toString();
     }.bind(this);
 
     this.toString = function(){
@@ -44,6 +41,18 @@ function DnD(canvas, interactor) {
     canvas.addEventListener('mousemove', this.onMove, false);
     canvas.addEventListener('mouseup', this.onUp, false);
 
+    document.getElementById('butRect').addEventListener('click', function(){
+        interactor.getCurrentShape(this);
+    });
+    document.getElementById('butLine').addEventListener('click', function(){
+        interactor.getCurrentShape(this);
+    });
+    document.getElementById('colour').addEventListener('input', function(){
+        interactor.getCurrentColor(this);
+    });
+    document.getElementById('spinnerWidth').addEventListener('change', function(){
+        interactor.getCurrentLineWidth(this);
+    });
 }
 
 

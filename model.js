@@ -5,9 +5,7 @@
 function Drawing(){
     this.forms = Array();
     this.addForm = function(form){
-        if (typeof form == Form){
-            this.forms.push(form);
-        }
+        this.forms.push(form);
     }.bind(this);
 
     this.getForms = function(){
@@ -44,11 +42,21 @@ function Rectangle(x, y, width, height, thick, color){
     }.bind(this);
 
     this.getFinalX = function(){
-        return this.x + this.width;
+        return this.width;
+        // return this.x + this.width;
     }.bind(this);
 
     this.getFinalY = function(){
-        return this.y + this.height;
+        return this.height;
+        // return this.y + this.height;
+    }.bind(this);
+
+    this.setFinalX = function(width){
+        this.width = width;
+    }.bind(this);
+
+    this.setFinalY = function(height){
+        this.height = height;
     }.bind(this);
 }
 Rectangle.prototype = new Form();
