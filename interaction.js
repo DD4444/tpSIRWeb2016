@@ -45,12 +45,11 @@ function DnD(canvas, interactor) {
     canvas.addEventListener('mousemove', this.onMove, false);
     canvas.addEventListener('mouseup', this.onUp, false);
 
-    document.getElementById('butRect').addEventListener('click', function(){
+    var buttonsShape = document.getElementsByName('mx');
+    addEventListenerList(buttonsShape, 'click', function(){
         interactor.getCurrentShape(this);
     });
-    document.getElementById('butLine').addEventListener('click', function(){
-        interactor.getCurrentShape(this);
-    });
+
     document.getElementById('colour').addEventListener('input', function(){
         interactor.getCurrentColor(this);
     });
@@ -58,11 +57,12 @@ function DnD(canvas, interactor) {
         interactor.getCurrentLineWidth(this);
     });
 
-    var buttonsDelete = document.getElementsByClassName('delete-form');
-    
-    addEventListenerList(buttonsDelete, 'click', function(){
-        interactor.removeForm(this);
-    });
+    this.attachEventsToDeleteButtons = function(){
+        var buttonsDelete = document.getElementsByClassName('delete-form');
+        addEventListenerList(buttonsDelete, 'click', function(){
+            interactor.removeForm(this);
+        });
+    };
 
 
 }
@@ -77,6 +77,7 @@ function getMousePosition(canvas, evt) {
     };
 }
 
+// Ajouter un évènement associè à une fonction à une liste d'éléments
 function addEventListenerList(list, event, fn) {
     for (var i = 0, len = list.length; i < len; i++) {
         list[i].addEventListener(event, fn, false);
