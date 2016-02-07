@@ -17,9 +17,10 @@ function Drawing(){
     }.bind(this);
 }
 
-function Form(thick, color, x, y){
+function Form(thick, color, dash, x, y){
     this.thick = thick;
     this.color = color;
+    this.dash = dash;
     this.x = x;
     this.y = y;
 
@@ -31,6 +32,10 @@ function Form(thick, color, x, y){
         return this.thick;
     }.bind(this);
 
+    this.getDash = function(){
+        return this.dash;
+    }.bind(this);
+
     this.getInitX = function(){
         return this.x;
     }.bind(this);
@@ -40,8 +45,8 @@ function Form(thick, color, x, y){
     }.bind(this);
 }
 
-function Rectangle(x, y, width, height, thick, color){
-    Form.call(this, thick, color, x, y);
+function Rectangle(x, y, width, height, thick, color, dash){
+    Form.call(this, thick, color, dash, x, y);
     this.width = width;
     this.height = height;
     this.type = "Rectangle";
@@ -58,12 +63,12 @@ function Rectangle(x, y, width, height, thick, color){
         return {
             thickness : this.thick,
             color : this.color,
-            xbegin : this.x,
-            ybegin : this.y,
-            xend : this.x + this.width,
-            yend : this.y + this.height,
-            width : this.width,
-            height : this.height,
+            xbegin : Math.round(this.x),
+            ybegin : Math.round(this.y),
+            xend : Math.round(this.x + this.width),
+            yend : Math.round(this.y + this.height),
+            width : Math.abs(this.width),
+            height : Math.abs(this.height),
             radius: "none",
             type : this.type
         };
@@ -71,8 +76,8 @@ function Rectangle(x, y, width, height, thick, color){
 }
 Rectangle.prototype = new Form();
 
-function Line(x, y, x2, y2, thick, color){
-    Form.call(this, thick, color, x, y);
+function Line(x, y, x2, y2, thick, color, dash){
+    Form.call(this, thick, color, dash, x, y);
     this.x2 = x2;
     this.y2 = y2;
     this.type = "Line";
@@ -89,10 +94,10 @@ function Line(x, y, x2, y2, thick, color){
         return {
             thickness : this.thick,
             color : this.color,
-            xbegin : this.x,
-            ybegin : this.y,
-            xend : this.x2,
-            yend : this.y2,
+            xbegin : Math.round(this.x),
+            ybegin : Math.round(this.y),
+            xend : Math.round(this.x2),
+            yend : Math.round(this.y2),
             width : "none",
             height : "none",
             radius : "none",
@@ -102,8 +107,8 @@ function Line(x, y, x2, y2, thick, color){
 }
 Line.prototype = new Form();
 
-function Circle(x, y, radius, thick, color){
-    Form.call(this, thick, color, x, y);
+function Circle(x, y, radius, thick, color, dash){
+    Form.call(this, thick, color, dash, x, y);
     this.radius = radius;
     this.type = "Circle";
 
@@ -115,8 +120,8 @@ function Circle(x, y, radius, thick, color){
         return {
             thickness : this.thick,
             color : this.color,
-            xbegin : this.x,
-            ybegin : this.y,
+            xbegin : Math.round(this.x),
+            ybegin : Math.round(this.y),
             xend : "none",
             yend : "none",
             width : "none",
@@ -126,4 +131,36 @@ function Circle(x, y, radius, thick, color){
         };
     }.bind(this);
 }
+
 Circle.prototype = new Form();
+
+function Oval(x, y, x2, y2, thick, color, dash){
+    Form.call(this, thick, color, dash, x, y);
+    this.x2 = x2;
+    this.y2 = y2;
+    this.type = "Oval";
+
+    this.getFinalX = function(){
+        return this.x2;
+    }.bind(this);
+
+    this.getFinalY = function(){
+        return this.y2;
+    }.bind(this);
+
+    this.getAttributs = function(){
+        return {
+            thickness : this.thick,
+            color : this.color,
+            xbegin : Math.round(this.x),
+            ybegin : Math.round(this.y),
+            xend : Math.round(this.x2),
+            yend : Math.round(this.y2),
+            width : "none",
+            height : "none",
+            radius : "none",
+            type : this.type
+        };
+    }.bind(this);
+}
+Oval.prototype = new Form();

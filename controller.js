@@ -1,18 +1,18 @@
 
-var editingMode = { butLine: 0, butRect: 1, butCircle: 2 };
+var editingMode = { butLine: 0, butRect: 1, butCircle: 2, butOval: 3 };
 
 function Pencil(ctx, drawing, canvas) {
 	this.currEditingMode = editingMode.line;
 	this.currLineWidth = 1;
 	this.currColour = '#000000';
 	this.currentShape = 0;
+	this.currentDash = [0];
 	this.form = null;
 
 
 	// Liez ici les widgets à la classe pour modifier les attributs présents ci-dessus.
 
 	this.getCurrentShape = function(doc){
-		console.log(doc.id);
 		this.currentShape = editingMode[doc.id];
 	}.bind(this);
 
@@ -21,7 +21,34 @@ function Pencil(ctx, drawing, canvas) {
 	};
 
 	this.getCurrentLineWidth = function(doc){
+		if (doc.value > 50){
+			doc.value = 50;
+		}
 		this.currLineWidth = doc.value;
+	};
+
+	this.getCurrentDash = function(docs){
+		var curr = this;
+		$(docs).each(function(i){
+			var doc = this;
+			$( ".mcanvas" ).each(function( index ) {
+				curr.setDash(this, doc);
+			});
+			curr.currentDash = doc.id.split('-');
+		});
+	};
+
+	this.setDash = function(elem, dash){
+		var context = elem.getContext('2d');
+		context.clearRect(0, 0, elem.width, elem.height);
+		context.beginPath();
+		context.lineWidth = 5;
+		context.strokeStyle = "#000000";
+		context.setLineDash(dash.id.split('-'));
+		context.moveTo(1,80);
+		context.lineTo(280,80);
+		context.closePath();
+		context.stroke();
 	};
 
 	this.DnD = new DnD(canvas, this);
@@ -29,16 +56,18 @@ function Pencil(ctx, drawing, canvas) {
 	// Implémentez ici les 3 fonctions onInteractionStart, onInteractionUpdate et onInteractionEnd
 
 	this.onInteractionStart = function(){
-		console.log(this.currentShape);
 		switch(this.currentShape) {
 			case editingMode.butRect:
-			this.form = new Rectangle(this.DnD.xbegin, this.DnD.ybegin, 0, 0, this.currLineWidth, this.currColour);
+			this.form = new Rectangle(this.DnD.xbegin, this.DnD.ybegin, 1, 1, this.currLineWidth, this.currColour, this.currentDash);
 			break;
 			case editingMode.butLine:
-			this.form = new Line(this.DnD.xbegin, this.DnD.ybegin, this.DnD.xbegin, this.DnD.ybegin, this.currLineWidth, this.currColour);
+			this.form = new Line(this.DnD.xbegin, this.DnD.ybegin, this.DnD.xbegin + 1, this.DnD.ybegin + 1, this.currLineWidth, this.currColour, this.currentDash);
 			break;
 			case editingMode.butCircle:
-			this.form = new Circle(this.DnD.xbegin, this.DnD.ybegin, 1, this.currLineWidth, this.currColour);
+			this.form = new Circle(this.DnD.xbegin, this.DnD.ybegin, 1, this.currLineWidth, this.currColour, this.currentDash);
+			break;
+			case editingMode.butOval:
+			this.form = new Oval(this.DnD.xbegin, this.DnD.ybegin, this.DnD.xbegin + 1, this.DnD.ybegin + 1, this.currLineWidth, this.currColour, this.currentDash);
 			break;
 			default:
 			break;
@@ -48,33 +77,37 @@ function Pencil(ctx, drawing, canvas) {
 	this.onInteractionUpdate = function(){
 		switch(this.currentShape) {
 			case editingMode.butRect:
-			this.form = new Rectangle(this.DnD.xbegin, this.DnD.ybegin, this.DnD.xend - this.DnD.xbegin, this.DnD.yend - this.DnD.ybegin, this.currLineWidth, this.currColour);
+			this.form = new Rectangle(this.DnD.xbegin, this.DnD.ybegin, this.DnD.xend - this.DnD.xbegin, this.DnD.yend - this.DnD.ybegin, this.currLineWidth, this.currColour, this.currentDash);
 			break;
 			case editingMode.butLine:
-			this.form = new Line(this.DnD.xbegin, this.DnD.ybegin, this.DnD.xend, this.DnD.yend, this.currLineWidth, this.currColour);
+			this.form = new Line(this.DnD.xbegin, this.DnD.ybegin, this.DnD.xend, this.DnD.yend, this.currLineWidth, this.currColour, this.currentDash);
 			break;
 			case editingMode.butCircle:
-			this.form = new Circle(this.DnD.xbegin, this.DnD.ybegin, Math.sqrt(Math.pow(this.DnD.xend - this.DnD.xbegin, 2) + Math.pow(this.DnD.yend - this.DnD.ybegin, 2)), this.currLineWidth, this.currColour);
+			var radius = Math.sqrt(Math.pow(this.DnD.xend - this.DnD.xbegin, 2) + Math.pow(this.DnD.yend - this.DnD.ybegin, 2));
+			this.form = new Circle(this.DnD.xbegin + ((this.DnD.xend - this.DnD.xbegin)/2), this.DnD.ybegin + ((this.DnD.yend - this.DnD.ybegin)/2), radius/2, this.currLineWidth, this.currColour, this.currentDash);
+			break;
+			case editingMode.butOval:
+			this.form = new Oval(this.DnD.xbegin, this.DnD.ybegin, this.DnD.xend, this.DnD.yend, this.currLineWidth, this.currColour, this.currentDash);
 			break;
 			default:
 			break;
 		}
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		drawing.paint(ctx);
-		this.form.paint(ctx);
+		drawing.paint(ctx, canvas);
+		this.form.paint(ctx, canvas);
 	}.bind(this);
 
 	this.onInteractionEnd = function(){
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		drawing.addForm(this.form);
-		drawing.paint(ctx);
+		drawing.paint(ctx, canvas);
 		this.editList();
 	}.bind(this);
 
 	this.removeForm = function(doc){
 		drawing.removeForm(doc.id);
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		drawing.paint(ctx);
+		drawing.paint(ctx, canvas);
 		this.editList();
 	}.bind(this);
 

@@ -36,37 +36,33 @@ function DnD(canvas, interactor) {
         }
     }.bind(this);
 
-    this.toString = function(){
-        console.log(this.isPress + "\n" + this.xbegin + "\n" + this.ybegin + "\n" + this.xend + "\n" + this.yend );
-    }.bind(this);
-
     // Associer les fonctions précédentes aux évènements du canvas.
     canvas.addEventListener('mousedown', this.onPress, false);
     canvas.addEventListener('mousemove', this.onMove, false);
     canvas.addEventListener('mouseup', this.onUp, false);
 
-    var buttonsShape = document.getElementsByName('mx');
-    addEventListenerList(buttonsShape, 'click', function(){
+    addEventListenerList(document.getElementsByName('mx'), 'click', function(){
         interactor.getCurrentShape(this);
     });
 
     document.getElementById('colour').addEventListener('input', function(){
         interactor.getCurrentColor(this);
     });
+
     document.getElementById('spinnerWidth').addEventListener('change', function(){
         interactor.getCurrentLineWidth(this);
     });
 
+    addEventListenerList(document.getElementsByClassName('apcanvas'), 'click', function(){
+        interactor.getCurrentDash(this.getElementsByTagName('canvas'));
+    });
+
     this.attachEventsToDeleteButtons = function(){
-        var buttonsDelete = document.getElementsByClassName('delete-form');
-        addEventListenerList(buttonsDelete, 'click', function(){
+        addEventListenerList(document.getElementsByClassName('delete-form'), 'click', function(){
             interactor.removeForm(this);
         });
     };
-
-
 }
-
 
 // Place le point de l'événement evt relativement à la position du canvas.
 function getMousePosition(canvas, evt) {
@@ -77,7 +73,7 @@ function getMousePosition(canvas, evt) {
     };
 }
 
-// Ajouter un évènement associè à une fonction à une liste d'éléments
+// Ajouter un évènement et sa fonction à une liste d'éléments
 function addEventListenerList(list, event, fn) {
     for (var i = 0, len = list.length; i < len; i++) {
         list[i].addEventListener(event, fn, false);

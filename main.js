@@ -11,3 +11,12 @@ canvas.height=600;
 var drawing = new Drawing();
 var pencil = new Pencil(ctx, drawing, canvas);
 drawing.paint(ctx, canvas);
+
+
+$( ".pcanvas" ).each(function( index ) {
+    pencil.setDash(this, this);
+});
+
+$(".mcanvas").each(function(){
+    pencil.setDash(this, document.getElementsByClassName('pcanvas')[0]);
+});
