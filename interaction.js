@@ -48,9 +48,24 @@ function DnD(canvas, interactor) {
     document.getElementById('colour').addEventListener('input', function(){
         interactor.getCurrentColor(this);
     });
+    document.getElementById('fillcolour').addEventListener('input', function(){
+        interactor.getCurrentFillColor(this, document.getElementById('unfillcolour'));
+    });
+
+    document.getElementById('unfillcolour').addEventListener('click', function(){
+        interactor.getCurrentFillColor(document.getElementById('fillcolour'), this);
+    });
 
     document.getElementById('spinnerWidth').addEventListener('change', function(){
         interactor.getCurrentLineWidth(this);
+    });
+
+    document.getElementById('butUndo').addEventListener('click', function(){
+        interactor.undo();
+    });
+
+    document.getElementById('butRedo').addEventListener('click', function(){
+        interactor.redo();
     });
 
     addEventListenerList(document.getElementsByClassName('apcanvas'), 'click', function(){

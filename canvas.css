@@ -4,14 +4,15 @@
     height: 100%;
 }
 .header {
-    margin: 40px;
-    vertical-align: middle;
+    height: 30px;
+    margin: 20px;
+    margin-bottom: 50px;
 }
-.inline-block{
+.block{
     display: inline-block;
 }
-.myCanvas {
-
+.block:last-child{
+    max-width: 900px;
 }
 .apcanvas{
     height: 20px;
@@ -23,6 +24,10 @@
 .mcanvas{
     width: 90%;
     height: 90%;
+}
+.do{
+    margin-left: 20px;
+    vertical-align: middle;
 }
 #dash button, #dash button li{
     width: 150px;
@@ -55,10 +60,16 @@ span {
 .mx-button input:checked + label {
     background-color: #b4b4b4;
 }
-#spinnerWidth, #colour, #dash{
-    margin-left: 30px;
+#lspinner, #lcolour, #lfillcolour, #lunfillcolour, #ldash{
+    margin-left: 20px;
 }
-
+#colour, #fillcolour{
+    vertical-align: middle;
+}
+#unfillcolour{
+    vertical-align: middle;
+    margin-top: -2px;
+}
 form {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin: 20px;
@@ -140,7 +151,7 @@ form {
 table.list-unstyled {
     display: table;
     width: 100%;
-    margin-left: 40px;
+    margin-left: 20px;
 }
 table.list-unstyled thead, table.list-unstyled tbody {
     float: left;
@@ -154,12 +165,14 @@ table.list-unstyled tbody {
 table.list-unstyled tr {
     display: table;
     text-align: left;
-    width: 750px;
-    margin-right: 17px;
+    width: 883px;
 }
 table.list-unstyled th, table.list-unstyled td {
     border : 1px solid gray;
     text-align: center;
-    min-width : 80px;
+    min-width : 65px;
     height: 25px;
+}
+table.list-unstyled th:first-child, table.list-unstyled td:first-child {
+    min-width : 25px;
 }

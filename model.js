@@ -4,7 +4,11 @@
 
 function Drawing(){
     this.forms = Array();
+    this.previous = Array();
+    this.follows = Array();
+
     this.addForm = function(form){
+        this.previous.push(this.forms.slice(0));
         this.forms.push(form);
     }.bind(this);
 
@@ -13,19 +17,39 @@ function Drawing(){
     }.bind(this);
 
     this.removeForm = function(id){
+        this.previous.push(this.forms.slice(0));
         this.forms.splice(id,1);
+    }.bind(this);
+
+    this.undo = function(){
+        if (this.previous.length > 0){
+            this.follows.push(this.forms.slice(0));
+            this.forms = this.previous.pop().slice(0);
+        }
+    }.bind(this);
+
+    this.redo = function(){
+        if (this.follows.length > 0){
+            this.previous.push(this.forms.slice(0));
+            this.forms = this.follows.pop().slice(0);
+        }
     }.bind(this);
 }
 
-function Form(thick, color, dash, x, y){
+function Form(thick, color, fill, dash, x, y){
     this.thick = thick;
     this.color = color;
+    this.fillColor = fill;
     this.dash = dash;
     this.x = x;
     this.y = y;
 
     this.getColor = function(){
         return this.color;
+    }.bind(this);
+
+    this.getFillColor = function(){
+        return this.fillColor;
     }.bind(this);
 
     this.getThick = function(){
@@ -45,8 +69,8 @@ function Form(thick, color, dash, x, y){
     }.bind(this);
 }
 
-function Rectangle(x, y, width, height, thick, color, dash){
-    Form.call(this, thick, color, dash, x, y);
+function Rectangle( thick, color, fill, dash, x, y, width, height){
+    Form.call(this, thick, color, fill, dash, x, y);
     this.width = width;
     this.height = height;
     this.type = "Rectangle";
@@ -76,8 +100,8 @@ function Rectangle(x, y, width, height, thick, color, dash){
 }
 Rectangle.prototype = new Form();
 
-function Line(x, y, x2, y2, thick, color, dash){
-    Form.call(this, thick, color, dash, x, y);
+function Line(thick, color, fill, dash, x, y, x2, y2){
+    Form.call(this, thick, color, fill, dash, x, y);
     this.x2 = x2;
     this.y2 = y2;
     this.type = "Line";
@@ -107,8 +131,8 @@ function Line(x, y, x2, y2, thick, color, dash){
 }
 Line.prototype = new Form();
 
-function Circle(x, y, radius, thick, color, dash){
-    Form.call(this, thick, color, dash, x, y);
+function Circle(thick, color, fill, dash, x, y, radius){
+    Form.call(this, thick, color, fill, dash, x, y);
     this.radius = radius;
     this.type = "Circle";
 
@@ -134,8 +158,8 @@ function Circle(x, y, radius, thick, color, dash){
 
 Circle.prototype = new Form();
 
-function Oval(x, y, x2, y2, thick, color, dash){
-    Form.call(this, thick, color, dash, x, y);
+function Oval(thick, color, fill, dash, x, y, x2, y2){
+    Form.call(this, thick, color, fill, dash, x, y);
     this.x2 = x2;
     this.y2 = y2;
     this.type = "Oval";

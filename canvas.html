@@ -29,44 +29,70 @@
                     <label for="butOval" unselectable>Oval</label>
                 </div>
             </form>
-            <input id="spinnerWidth" type="number" min="1" max="50" step="1" value="1" size="4">
-            <input id="colour" type="color">
-            <div class="dropdown inline-block mx-button" id="dash">
-                <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown"><canvas class="mcanvas" id="mcanvas"></canvas>
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <li><a class="apcanvas" href="#"><canvas class="pcanvas" id="0"></canvas></a></li>
-                        <li><a class="apcanvas" href="#"><canvas class="pcanvas" id="1-2"></canvas></a></li>
-                        <li><a class="apcanvas" href="#"><canvas class="pcanvas" id="5-2"></canvas></a></li>
-                        <li><a class="apcanvas" href="#"><canvas class="pcanvas" id="15"></canvas></a></li>
-                    </ul>
+            <div class="block">
+                <label id="lspinner" for="spinnerWidth" unselectable>Line thick</label>
+                <input id="spinnerWidth" type="number" min="1" max="50" step="1" value="1" size="4">
+            </div>
+            <div class="block">
+                <label id="lcolour" for="colour" unselectable>Line color</label>
+                <input id="colour" type="color">
+            </div>
+            <div class="block">
+                <label id="lfillcolour" for="fillcolour" unselectable>Fill color</label>
+                <input id="fillcolour" type="color">
+            </div>
+            <div class="block">
+                <label id="lunfillcolour"for="unfillcolour" unselectable>Transparent</label>
+                <input id="unfillcolour" type="checkbox" checked>
+            </div>
+            <div class="block">
+                <label id="ldash" for="dash" unselectable>Line dash</label>
+                <div class="dropdown block " id="dash">
+                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown"><canvas class="mcanvas" id="mcanvas"></canvas>
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a class="apcanvas" href="#"><canvas class="pcanvas" id="0"></canvas></a></li>
+                            <li><a class="apcanvas" href="#"><canvas class="pcanvas" id="1-2"></canvas></a></li>
+                            <li><a class="apcanvas" href="#"><canvas class="pcanvas" id="5-2"></canvas></a></li>
+                            <li><a class="apcanvas" href="#"><canvas class="pcanvas" id="15"></canvas></a></li>
+                        </ul>
+                    </button>
+                </div>
+                <div class="block do">
+                    <div class="mx-button">
+                        <input type="button" name="mxdo" id="butUndo">
+                        <label for="butUndo" unselectable>Undo</label>
+                    </div>
+                    <div class="mx-button">
+                        <input type="button" name="mxdo" id="butRedo">
+                        <label for="butRedo" unselectable>Redo</label>
+                    </div>
                 </div>
             </div>
+        </div>
 
-
-            <div class="row">
-                <div class="col-md-5" id="canvasDiv">
-                    <canvas class="myCanvas" id="myCanvas"></canvas>
-                </div>
-                <div class="col-md-6">
-                    <table class="list-unstyled" id="shapeList">
-                        <thead>
-                            <th>#</th>
-                            <th>Type</th>
-                            <th>Thickness</th>
-                            <th>Color</th>
-                            <th>Xbegin</th>
-                            <th>Ybegin</th>
-                            <th>Xend</th>
-                            <th>Yend</th>
-                            <th>Width</th>
-                            <th>Height</th>
-                            <th>Radius</th>
-                            <th>Delete</th>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
+        <div class="row">
+            <div class="block" id="canvasDiv">
+                <canvas class="myCanvas" id="myCanvas"></canvas>
+            </div>
+            <div class="block">
+                <table class="list-unstyled" id="shapeList">
+                    <thead>
+                        <th>#</th>
+                        <th>Type</th>
+                        <th>Thick</th>
+                        <th>Color</th>
+                        <th>Xbegin</th>
+                        <th>Ybegin</th>
+                        <th>Xend</th>
+                        <th>Yend</th>
+                        <th>Width</th>
+                        <th>Height</th>
+                        <th>Radius</th>
+                        <th>Delete</th>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
 
