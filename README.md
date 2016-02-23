@@ -67,6 +67,6 @@ Le Pencil comprend donc :
 - La couleur de trait
 - La couleur de remplissage effective
 - La couleur de remplissage en attente
-- Le style de trait
+- Le style de trait  
 Tous ces attributs sont modifiés par des actions via le DnD.
 - La forme courante qui va être dessinée avec toutes les propriétés définies si dessus
