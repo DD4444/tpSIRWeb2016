@@ -67,6 +67,12 @@ function Pencil(ctx, drawing, canvas) {
 	// Implémentez ici les 3 fonctions onInteractionStart, onInteractionUpdate et onInteractionEnd
 
 	this.onInteractionStart = function(){
+		console.log(this.currLineWidth);
+		console.log(this.currColour);
+		console.log(this.currFillColour);
+		console.log(this.fillColour);
+		console.log(this.currentShape);
+		console.log(this.currentDash);
 		switch(this.currentShape) {
 			case editingMode.butRect:
 			this.form = new Rectangle(this.currLineWidth, this.currColour, this.currFillColour, this.currentDash, this.DnD.xbegin, this.DnD.ybegin, 1, 1);
@@ -96,7 +102,7 @@ function Pencil(ctx, drawing, canvas) {
 			this.form = new Line(this.currLineWidth, this.currColour, this.currFillColour, this.currentDash, this.DnD.xbegin, this.DnD.ybegin, this.DnD.xend, this.DnD.yend);
 			break;
 			case editingMode.butCircle:
-			var radius = Math.min(this.DnD.xend - this.DnD.xbegin, this.DnD.yend - this.DnD.ybegin);
+			var radius = Math.abs(Math.min(this.DnD.xend - this.DnD.xbegin, this.DnD.yend - this.DnD.ybegin));
 			this.form = new Circle(this.currLineWidth, this.currColour, this.currFillColour, this.currentDash, this.DnD.xbegin + ((this.DnD.xend - this.DnD.xbegin)/2), this.DnD.ybegin + ((this.DnD.yend - this.DnD.ybegin)/2), radius/2);
 			break;
 			case editingMode.butOval:
