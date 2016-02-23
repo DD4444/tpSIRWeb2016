@@ -2,7 +2,6 @@
 var editingMode = { butLine: 0, butRect: 1, butCircle: 2, butOval: 3 };
 
 function Pencil(ctx, drawing, canvas) {
-	this.currEditingMode = editingMode.line;
 	this.currLineWidth = 1;
 	this.currColour = '#000000';
 	this.currFillColour = 'rgba(140,140,140,0)';
@@ -31,10 +30,6 @@ function Pencil(ctx, drawing, canvas) {
 			this.currFillColour = this.fillColour;
 		}
 	};
-
-	// this.getCurrentUnfillColor = function(doc){
-	// 	this.currFillColour = (doc.checked === true) ? 'rgba(140,140,140,0)' : this.prevFillColour;
-	// };
 
 	this.getCurrentLineWidth = function(doc){
 		if (doc.value > 50){
@@ -101,7 +96,7 @@ function Pencil(ctx, drawing, canvas) {
 			this.form = new Line(this.currLineWidth, this.currColour, this.currFillColour, this.currentDash, this.DnD.xbegin, this.DnD.ybegin, this.DnD.xend, this.DnD.yend);
 			break;
 			case editingMode.butCircle:
-			var radius = Math.min(Math.sqrt(Math.pow(this.DnD.xend - this.DnD.xbegin, 2)), Math.sqrt(Math.pow(this.DnD.yend - this.DnD.ybegin, 2)));
+			var radius = Math.min(this.DnD.xend - this.DnD.xbegin, this.DnD.yend - this.DnD.ybegin);
 			this.form = new Circle(this.currLineWidth, this.currColour, this.currFillColour, this.currentDash, this.DnD.xbegin + ((this.DnD.xend - this.DnD.xbegin)/2), this.DnD.ybegin + ((this.DnD.yend - this.DnD.ybegin)/2), radius/2);
 			break;
 			case editingMode.butOval:
