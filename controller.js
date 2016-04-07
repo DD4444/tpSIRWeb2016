@@ -67,12 +67,12 @@ function Pencil(ctx, drawing, canvas) {
 	// Implémentez ici les 3 fonctions onInteractionStart, onInteractionUpdate et onInteractionEnd
 
 	this.onInteractionStart = function(){
-		console.log(this.currLineWidth);
-		console.log(this.currColour);
-		console.log(this.currFillColour);
-		console.log(this.fillColour);
-		console.log(this.currentShape);
-		console.log(this.currentDash);
+		// console.log(this.currLineWidth);
+		// console.log(this.currColour);
+		// console.log(this.currFillColour);
+		// console.log(this.fillColour);
+		// console.log(this.currentShape);
+		// console.log(this.currentDash);
 		switch(this.currentShape) {
 			case editingMode.butRect:
 			this.form = new Rectangle(this.currLineWidth, this.currColour, this.currFillColour, this.currentDash, this.DnD.xbegin, this.DnD.ybegin, 1, 1);
